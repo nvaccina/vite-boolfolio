@@ -1,30 +1,63 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
+<script>
+
+import  {store} from './store/store.js';
+import axios from 'axios';
+
+export default {
+    name: 'home',
+
+    data(){
+        return{
+            works:[],
+        }
+    },
+
+    methods:{
+        getApi(){
+            axios.get(store.apiUrl + 'works')
+            .then(results => {
+                this.works = results.data;
+            })
+        },
+
+        formatData(dateString){
+          const dd = new Date(dateString);
+          return dd.toLocaleDateString();
+        }
+    },
+
+    mounted(){
+        this.getApi();
+    }
+
+}
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="container">
+
+    <h1>Elenco Works</h1>
+
+    <ul>
+      <li 
+        v-for="work in works" 
+        :key="work.id"
+      >
+        <span>{{ work.title }}</span> -
+        <strong>{{formatData(work.creation_date)}}</strong>
+
+        
+
+      </li>
+    </ul>
+
+
   </div>
-  <HelloWorld msg="Vite + Vue" />
+
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+<style lang="scss" scoped>
+@use './scss/style.scss' as *;
+
 </style>
+

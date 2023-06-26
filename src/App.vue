@@ -2,9 +2,13 @@
 
 import  {store} from './store/store.js';
 import axios from 'axios';
+import WorkCard from './components/WorkCard.vue'
 
 export default {
     name: 'home',
+    components:{
+      WorkCard,
+    },
 
     data(){
         return{
@@ -36,20 +40,20 @@ export default {
 <template>
   <div class="container">
 
-    <h1>Elenco Works</h1>
+    <h1 class="py-3">Elenco Works</h1>
 
-    <ul>
-      <li 
-        v-for="work in works" 
-        :key="work.id"
-      >
-        <span>{{ work.title }}</span> -
-        <strong>{{formatData(work.creation_date)}}</strong>
+    <div class="d-flex flex-wrap justify-content-center">
+      <WorkCard
+        v-for="(work, index) in works"
+        :key="index"
+        :image="work.image"
+        :title="work.title"
+        :type="work.type"
+        :technologies="work.technologies"
+        :text="work.text"
+      />
 
-        
-
-      </li>
-    </ul>
+    </div>
 
 
   </div>

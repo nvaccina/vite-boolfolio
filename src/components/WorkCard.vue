@@ -32,15 +32,18 @@ export default {
 <template>
   
     <div class="card" style="width: 15rem;">
-      <img :src="work.image" :alt="work.title" style=" height: 200px; width: 100%;">
+      <div style=" height: 200px; width: 100%;">
+        <img :src="work.image" :alt="work.title" style=" height: 100%; width: 100%;">
+      </div>
       <div class="card-body">
         <h5 class="card-title">{{ work.title }}</h5>
         <p class="my-2">Creato: {{ formattedData }}</p>
-        <div class="my-1" v-if="work.type">
-          <span class="badge text-bg-primary">{{ work.type.name }}</span>
+        <div class="my-1">
+          <span v-if="work.type" class="badge text-bg-primary">{{ work.type.name }}</span>
+          <span v-else>Tipo non presente</span>
         </div>
         <div>                  
-          <span 
+          <span
             v-for="technology in work.technologies" 
             :key="technology.id" 
             class="badge text-bg-warning my-1 me-1"
@@ -63,6 +66,9 @@ export default {
   border: 2px solid black !important;
   .card-body{
     padding: 5px;
+    p{
+      font-size: 13px;
+    }
   }
 }
 

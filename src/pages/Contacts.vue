@@ -1,13 +1,11 @@
 <script>
 export default {
-  name: 'App',
+  name: 'Contacts',
 
 }
 </script>
 
 <template>
-
-  <router-view></router-view>
   
 </template>
 

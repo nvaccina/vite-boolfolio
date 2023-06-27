@@ -5,10 +5,24 @@ export default {
   props:{
     work: Object,
   },
-  methods:{
-    formatData(dateString){
-        const d = new Date(dateString);
-        return d.toLocaleDateString();
+  computed:{
+    formattedData(){
+        const d = new Date(this.work.creation_date);
+        const options = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        };
+        function getUserLocale(){
+            const userLocale = navigator.languages && navigator.languages.length
+            ? navigator.languages[0]
+            : navigator.language;
+
+	          return userLocale;
+	      }
+
+        return d.toLocaleString(getUserLocale(), options);
     }
   }
 
@@ -21,7 +35,7 @@ export default {
       <img :src="work.image" :alt="work.title" style=" height: 200px; width: 100%;">
       <div class="card-body">
         <h5 class="card-title">{{ work.title }}</h5>
-        <p class="my-2">Creato il: {{ formatData(work.creation_date) }}</p>
+        <p class="my-2">Creato: {{ formattedData }}</p>
         <div class="my-1" v-if="work.type">
           <span class="badge text-bg-primary">{{ work.type.name }}</span>
         </div>

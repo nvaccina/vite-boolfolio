@@ -17,6 +17,7 @@ export default {
       current_page: null,
       last_page: null,    
       types:[],        
+      technologies:[],   
     }
   },
 
@@ -32,16 +33,34 @@ export default {
             this.last_page = results.data.last_page;
           })
       },
+      
       getTypes(){
         axios.get(store.apiUrl + 'works/types')
         .then(result =>{
           this.types = result.data;
         })
+      },
+
+      getTechnologies(){
+        axios.get(store.apiUrl + 'works/technologies')
+        .then(result =>{
+          this.technologies = result.data;
+        })
+      },
+
+      getWorkType(id){
+        this.getApi(store.apiUrl + 'works/work-type/'+id)
+      },
+
+      getWorkTechnology(id){
+        this.getApi(store.apiUrl + 'works/work-technology/'+id)
       }
+
   },
   mounted(){
       this.getApi(store.apiUrl + 'works');
       this.getTypes();
+      this.getTechnologies();
   }
 
 }
@@ -86,11 +105,28 @@ export default {
     </div>
 
     <div class="right pt-5">
-      <h3>Tipi</h3>
       <div>
-        <button v-for="type in types" :key="type.id" class="nv_button">{{ type.name }}</button>
-
+        <h3>Tipi</h3>
+        <button 
+          v-for="type in types" 
+          :key="type.id" 
+          class="nv_button btn-type"
+          @click="getWorkType(type.id)"
+        >
+          {{ type.name }}
+        </button>
       </div>
+
+      <div class="pt-2">
+        <h3>Tecnologie</h3>
+        <button 
+        v-for="technology in technologies" 
+        :key="technology.id" 
+        class="nv_button btn-tech" 
+        @click="getWorkTechnology(technology.id)"
+        >{{ technology.name }}
+      </button>
+      </div>      
       
     </div>  
   </div> 
@@ -107,12 +143,18 @@ export default {
     border: 2px solid black;
     border-radius: 5px;
     padding: 5px 7px;
-    background-color: #0D6EFD;
     font-weight: bold;
-    color: white;
     margin-right: 5px;
     margin-bottom: 5px;
   }
+  .btn-type{
+      background-color: #0D6EFD;
+      color: white;
+    }
+    .btn-tech{
+      background-color: #FFC107;
+      color: black;
+    }
 }
 
 </style>

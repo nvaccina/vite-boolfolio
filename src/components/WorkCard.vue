@@ -32,8 +32,14 @@ export default {
 <template>
   
     <div class="card" style="width: 15rem;">
-      <div style=" height: 200px; width: 100%;">
-        <img :src="work.image" :alt="work.title" style=" height: 100%; width: 100%;">
+      <div>
+        <div v-if="work.image"  style=" height: 200px; width: 100%;">
+          <img :src="work.image" :alt="work.title" style=" height: 100%; width: 100%;">
+        </div>
+        <div v-else  style=" height: 200px; width: 100%;">
+          <img src="/img/noimage.jpg" alt="" style=" height: 100%; width: 100%;">
+        </div>
+        
       </div>
       <div class="card-body">
         <h5 class="card-title"><router-link :to="{ name:'workDetail', params:{slug: work.slug }}">{{ work.title }}</router-link></h5>

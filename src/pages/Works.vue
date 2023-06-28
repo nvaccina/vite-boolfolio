@@ -32,11 +32,11 @@ export default {
           axios.get(endpoint)
           .then(results => {
             store.works = results.data.data;
-            this.links = results.data.links;
-            this.first_page_url = results.data.first_page_url;
-            this.last_page_url = results.data.last_page_url;
-            this.current_page = results.data.current_page;
-            this.last_page = results.data.last_page;
+            store.links = results.data.links;
+            store.first_page_url = results.data.first_page_url;
+            store.last_page_url = results.data.last_page_url;
+            store.current_page = results.data.current_page;
+            store.last_page = results.data.last_page;
             this.loaded = false;
           })
       },
@@ -78,12 +78,13 @@ export default {
   <Loader v-if="loaded" />
   
   <div v-else class=" container">
+    
     <FormSearch/>
 
     <div class="d-flex">
         
       <div class="left w-100">
-        <h1 class="py-3">Elenco Works</h1>
+        <h1 class="pt-5 pb-3 bold">Elenco Works</h1>
         <div class="d-flex flex-wrap justify-content-center">
           <WorkCard
             v-for="(work, index) in store.works"
@@ -91,6 +92,7 @@ export default {
             :work="work"
           />
         </div>
+
         <div class="d-flex justify-content-center">
           <button 
             @click="getApi(store.first_page_url)" 
@@ -109,7 +111,7 @@ export default {
 
           <button 
             @click="getApi(store.last_page_url)" 
-            :disabled="store.current_page === last_page"
+            :disabled="store.current_page === store.last_page"
           > 
             <i class="fa-solid fa-forward-step"></i> 
           </button>
@@ -119,7 +121,7 @@ export default {
       </div>
 
       <div class="right pt-5">
-        <div>
+        <div class="tipi pb-3">
           <h3>Tipi</h3>
           <button 
             v-for="type in types" 
@@ -131,7 +133,7 @@ export default {
           </button>
         </div>
 
-        <div class="pt-2">
+        <div class="pt-3">
           <h3>Tecnologie</h3>
           <button 
             v-for="technology in technologies" 
@@ -172,6 +174,9 @@ export default {
   width: 250px;
   border-left: 1px solid lightgray;
   padding: 0 10px;
+  .tipi{
+    border-bottom: 1px solid lightgray;
+  }
   .nv_button{
     border: 2px solid black;
     border-radius: 5px;

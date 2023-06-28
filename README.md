@@ -17,4 +17,4 @@ Creiamo un nuovo componente ProjectCard, che corrisponde ad una card per visuali
 - Aggiungere un elenco di  bottoni per i tipi  e le tecnologie, Questi bottoni verranno stampati a seguito di chiamate axios dedicate.
 - Al click di un bottone per il tipo o  tecnologie, nell’elenco dei progetti appariranno solo quelli di quel tipo o di quella tecnologia
 - Aggiungere alla navigazione con Vue anche la rotta che accetta lo slug come parametro dinamico e la relativa API del dettaglio dell’elemento cliccato
-- Creare un piccolo motore di ricerca per title;
+- Creare un un form di ricerca per titolo;

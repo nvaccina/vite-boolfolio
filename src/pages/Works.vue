@@ -3,16 +3,17 @@ import  {store} from '../store/store';
 import axios from 'axios';
 import WorkCard from '../components/WorkCard.vue'
 import Loader from '../components/Loader.vue'
+import FormSearch from '../components/FormSearch.vue'
 
 export default {
   name: 'Works',
   components:{
     WorkCard,
-    Loader
+    Loader,
+    FormSearch
   },
   data(){
     return{
-      works:[],
       links:[],
       first_page_url: null,
       last_page_url: null,
@@ -20,7 +21,8 @@ export default {
       last_page: null,    
       types:[],        
       technologies:[],   
-      loaded: false
+      loaded: false,
+      store
     }
   },
 
@@ -29,7 +31,7 @@ export default {
           this.loaded = true;
           axios.get(endpoint)
           .then(results => {
-            this.works = results.data.data;
+            store.works = results.data.data;
             this.links = results.data.links;
             this.first_page_url = results.data.first_page_url;
             this.last_page_url = results.data.last_page_url;
@@ -74,75 +76,83 @@ export default {
 <template>
 
   <Loader v-if="loaded" />
+  
+  <div v-else class=" container">
+    <FormSearch/>
 
-  <div v-else class=" container d-flex">
-    <div class="left w-100">
-      <h1 class="py-3">Elenco Works</h1>
-      <div class="d-flex flex-wrap justify-content-center">
-        <WorkCard
-          v-for="(work, index) in works"
-          :key="index"
-          :work="work"
-        />
+    <div class="d-flex">
+        
+      <div class="left w-100">
+        <h1 class="py-3">Elenco Works</h1>
+        <div class="d-flex flex-wrap justify-content-center">
+          <WorkCard
+            v-for="(work, index) in store.works"
+            :key="index"
+            :work="work"
+          />
+        </div>
+        <div class="d-flex justify-content-center">
+          <button 
+            @click="getApi(store.first_page_url)" 
+            :disabled="store.current_page === 1"
+          >   
+            <i class="fa-solid fa-backward-step"></i> 
+          </button>
+
+          <button 
+            v-for="(link, index) in store.links" 
+            :key="index" 
+            @click="getApi(link.url)" 
+            :disabled="link.active || !link.url"
+            v-html="link.label"
+          ></button>
+
+          <button 
+            @click="getApi(store.last_page_url)" 
+            :disabled="store.current_page === last_page"
+          > 
+            <i class="fa-solid fa-forward-step"></i> 
+          </button>
+
+        </div>
+
       </div>
-      <div class="d-flex justify-content-center">
-        <button 
-          @click="getApi(first_page_url)" 
-          :disabled="current_page === 1"
-        >   
-          <i class="fa-solid fa-backward-step"></i> 
-        </button>
 
-        <button 
-          v-for="(link, index) in links" 
-          :key="index" 
-          @click="getApi(link.url)" 
-          :disabled="link.active || !link.url"
-          v-html="link.label"
-        ></button>
+      <div class="right pt-5">
+        <div>
+          <h3>Tipi</h3>
+          <button 
+            v-for="type in types" 
+            :key="type.id" 
+            class="nv_button btn-type"
+            @click="getWorkType(type.id)"
+          >
+            {{ type.name }}
+          </button>
+        </div>
 
-        <button 
-          @click="getApi(last_page_url)" 
-          :disabled="current_page === last_page"
-        > 
-          <i class="fa-solid fa-forward-step"></i> 
-        </button>
-
-      </div>
+        <div class="pt-2">
+          <h3>Tecnologie</h3>
+          <button 
+            v-for="technology in technologies" 
+            :key="technology.id" 
+            class="nv_button btn-tech" 
+            @click="getWorksTechnology(technology.id)"
+            >{{ technology.name }}
+          </button>
+        </div>      
+        <div class="pt-2">
+          <button 
+            class="nv_button btn-reset" 
+            @click="getApi()"
+            >RESET</button>
+        </div>      
+        
+      </div>  
 
     </div>
 
-    <div class="right pt-5">
-      <div>
-        <h3>Tipi</h3>
-        <button 
-          v-for="type in types" 
-          :key="type.id" 
-          class="nv_button btn-type"
-          @click="getWorkType(type.id)"
-        >
-          {{ type.name }}
-        </button>
-      </div>
 
-      <div class="pt-2">
-        <h3>Tecnologie</h3>
-        <button 
-          v-for="technology in technologies" 
-          :key="technology.id" 
-          class="nv_button btn-tech" 
-          @click="getWorksTechnology(technology.id)"
-          >{{ technology.name }}
-        </button>
-      </div>      
-      <div class="pt-2">
-        <button 
-          class="nv_button btn-reset" 
-          @click="getApi()"
-          >RESET</button>
-      </div>      
-      
-    </div>  
   </div> 
   
 </template>

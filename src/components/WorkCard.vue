@@ -36,7 +36,7 @@ export default {
         <img :src="work.image" :alt="work.title" style=" height: 100%; width: 100%;">
       </div>
       <div class="card-body">
-        <h5 class="card-title">{{ work.title }}</h5>
+        <h5 class="card-title"><router-link :to="{ name:'workDetail', params:{slug: work.slug }}">{{ work.title }}</router-link></h5>
         <p class="my-2">Creato: {{ formattedData }}</p>
         <div class="my-1">
           <span class="badge text-bg-primary">{{ work.type.name }}</span>
@@ -74,6 +74,13 @@ export default {
   &:hover{
     cursor: pointer;
     transform: scale(1.05);
+  }
+  a{
+    text-decoration: none;
+    &:hover{
+      text-decoration: underline;
+      color: blue;
+    }
   }
   .card-body{
     padding: 5px;

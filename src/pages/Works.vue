@@ -2,11 +2,13 @@
 import  {store} from '../store/store';
 import axios from 'axios';
 import WorkCard from '../components/WorkCard.vue'
+import Loader from '../components/Loader.vue'
 
 export default {
   name: 'Works',
   components:{
     WorkCard,
+    Loader
   },
   data(){
     return{
@@ -18,11 +20,13 @@ export default {
       last_page: null,    
       types:[],        
       technologies:[],   
+      loaded: false
     }
   },
 
   methods:{
       getApi(endpoint = store.apiUrl + 'works'){
+          this.loaded = true;
           axios.get(endpoint)
           .then(results => {
             this.works = results.data.data;
@@ -31,6 +35,7 @@ export default {
             this.last_page_url = results.data.last_page_url;
             this.current_page = results.data.current_page;
             this.last_page = results.data.last_page;
+            this.loaded = false;
           })
       },
       
@@ -67,7 +72,10 @@ export default {
 </script>
 
 <template>
-  <div class=" container d-flex">
+
+  <Loader v-if="loaded" />
+
+  <div v-else class=" container d-flex">
     <div class="left w-100">
       <h1 class="py-3">Elenco Works</h1>
       <div class="d-flex flex-wrap justify-content-center">

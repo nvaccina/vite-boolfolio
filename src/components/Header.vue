@@ -19,7 +19,6 @@ export default {
       <li>
         <router-link :to="{name:'about'}">chi siamo</router-link>
       </li>
-
     </ul>
   </header>
   
@@ -36,6 +35,10 @@ header{
     margin: 0;
     li{
       margin: 0 10px;
+      border-bottom: 2px solid white;
+      &:hover, &.active{
+          border-bottom: 2px solid blue;
+        }
       a{
         text-transform: uppercase;
         text-decoration: none;

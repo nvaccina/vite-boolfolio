@@ -39,17 +39,23 @@ export default {
         <h5 class="card-title">{{ work.title }}</h5>
         <p class="my-2">Creato: {{ formattedData }}</p>
         <div class="my-1">
-          <span v-if="work.type" class="badge text-bg-primary">{{ work.type.name }}</span>
-          <span v-else>Tipo non presente</span>
+          <span class="badge text-bg-primary">{{ work.type.name }}</span>
         </div>
-        <div>                  
-          <span
-            v-for="technology in work.technologies" 
-            :key="technology.id" 
-            class="badge text-bg-warning my-1 me-1"
-          >
-            {{ technology.name }}
-          </span>
+
+        <div>  
+          <div v-if="work.technologies">
+            <span
+              v-for="technology in work.technologies" 
+              :key="technology.id" 
+              class="badge text-bg-warning my-1 me-1"
+            >
+              {{ technology.name }}
+            </span>
+          </div>
+          <div v-else>
+            <span>Tecnologia non presente</span>
+          </div>          
+          
         </div>
 
       </div>
@@ -64,6 +70,11 @@ export default {
 .card{
   margin: 20px 10px;
   border: 2px solid black !important;
+  transition: all 0.5s;
+  &:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+  }
   .card-body{
     padding: 5px;
     p{

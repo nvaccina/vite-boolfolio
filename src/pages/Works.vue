@@ -22,7 +22,7 @@ export default {
   },
 
   methods:{
-      getApi(endpoint){
+      getApi(endpoint = store.apiUrl + 'works'){
           axios.get(endpoint)
           .then(results => {
             this.works = results.data.data;
@@ -52,13 +52,13 @@ export default {
         this.getApi(store.apiUrl + 'works/work-type/'+id)
       },
 
-      getWorkTechnology(id){
+      getWorksTechnology(id){
         this.getApi(store.apiUrl + 'works/work-technology/'+id)
       }
 
   },
   mounted(){
-      this.getApi(store.apiUrl + 'works');
+      this.getApi();
       this.getTypes();
       this.getTechnologies();
   }
@@ -120,12 +120,18 @@ export default {
       <div class="pt-2">
         <h3>Tecnologie</h3>
         <button 
-        v-for="technology in technologies" 
-        :key="technology.id" 
-        class="nv_button btn-tech" 
-        @click="getWorkTechnology(technology.id)"
-        >{{ technology.name }}
-      </button>
+          v-for="technology in technologies" 
+          :key="technology.id" 
+          class="nv_button btn-tech" 
+          @click="getWorksTechnology(technology.id)"
+          >{{ technology.name }}
+        </button>
+      </div>      
+      <div class="pt-2">
+        <button 
+          class="nv_button btn-reset" 
+          @click="getApi()"
+          >RESET</button>
       </div>      
       
     </div>  
@@ -135,6 +141,15 @@ export default {
 
 <style lang="scss" scoped>
 @use '../scss/style.scss' as *;
+
+.left{
+  button{
+    padding: 5px 10px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    margin: 0 5px;
+  }
+}
 .right{
   width: 250px;
   border-left: 1px solid lightgray;
@@ -150,10 +165,27 @@ export default {
   .btn-type{
       background-color: #0D6EFD;
       color: white;
+      &:hover, &.active{
+        background-color: white;
+        color: #0D6EFD;
+      }
     }
     .btn-tech{
       background-color: #FFC107;
       color: black;
+      &:hover, &.active{
+        background-color: black;
+        color: #FFC107;
+      }
+    }
+    .btn-reset{
+      background-color: red;
+      color: white;
+      margin-top: 15px;
+      &:hover, &.active{
+        background-color: white;
+        color: red;
+      }
     }
 }
 

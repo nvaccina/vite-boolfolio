@@ -23,7 +23,6 @@ export default {
       axios.get(store.apiUrl + 'works/' + this.$route.params.slug)
       .then(result =>{
         this.work = result.data;
-        console.log(this.work.title);
         this.loaded = true;
       })
 

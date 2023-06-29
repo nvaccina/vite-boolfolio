@@ -24,10 +24,6 @@ export default {
 <style lang="scss" scoped>
 @use './scss/style.scss' as *;
 
-.active{
-  border-bottom: 2px solid blue;
-  color: blue;
-}
 
 
 </style>

@@ -19,9 +19,9 @@ export default {
 @use '../scss/style.scss' as *;
 
 footer{
-  height: 100px;
-  background-color: lightgray;
-  border-top: 2px solid black;
+  height: 80px;
+  background-color: brown;
+  border-top: 3px solid black;
 }
 
 </style>

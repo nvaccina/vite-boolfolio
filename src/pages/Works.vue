@@ -121,7 +121,7 @@ export default {
       </div>
 
       <div class="right pt-5">
-        <div class="tipi pb-3">
+        <div class="nv_divisorio pb-3">
           <h3>Tipi</h3>
           <button 
             v-for="type in types" 
@@ -133,7 +133,7 @@ export default {
           </button>
         </div>
 
-        <div class="pt-3">
+        <div class="py-3 nv_divisorio">
           <h3>Tecnologie</h3>
           <button 
             v-for="technology in technologies" 
@@ -174,9 +174,6 @@ export default {
   width: 250px;
   border-left: 1px solid lightgray;
   padding: 0 10px;
-  .tipi{
-    border-bottom: 1px solid lightgray;
-  }
   .nv_button{
     border: 2px solid black;
     border-radius: 5px;
@@ -211,5 +208,7 @@ export default {
       }
     }
 }
-
+.nv_divisorio{
+  border-bottom: 1px solid lightgray;
+}
 </style>

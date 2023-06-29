@@ -62,11 +62,10 @@ export default {
   </form>
 
   <div v-else class="text-center">
-    <h3 class="success-msg">Form inviato con successo. Ti contatteremo il prima possibile!</h3>
+    <h3 class="success-msg">Richiesta inviata con successo. Ti contatteremo il prima possibile!</h3>
   </div>
 
-  
-  
+
 </template>
 
 <style lang="scss" scoped>

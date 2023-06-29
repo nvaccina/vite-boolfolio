@@ -10,7 +10,7 @@ export default {
 </script>
 
 <template>
-  <div class="container">
+  <div class="container nv_height">
     <h1 class="pb-2">Contatti</h1>
 
     <ContactForm/>
@@ -20,5 +20,9 @@ export default {
 
 <style lang="scss" scoped>
 @use '../scss/style.scss' as *;
+
+.nv_height{
+    height: calc(100vh - 237px);
+}
 
 </style>

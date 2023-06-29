@@ -9,11 +9,14 @@ export default {
       name:'',
       email:'',
       message:'',
-      errors: {}
+      errors: {},
+      sending: false,
+      success: false
     }
   },
   methods:{
     sendForm(){
+      this.sending = true;
       const data = {
         name: this.name,
         email: this.email,
@@ -21,7 +24,7 @@ export default {
       }
       axios.post(`${store.apiUrl}contacts`, data)
         .then(result => {
-
+          this.sending = false;
           if(!result.data.success){
             this.errors = result.data.errors;
           }else{
@@ -51,7 +54,7 @@ export default {
       <p class="error-msg" v-for="(error, index) in errors.message" :key="index">{{ error }}</p>
     </div>
     <div class="text-center">
-      <button class="btn btn-success px-5 mt-3" type="submit">Invia</button>
+      <button class="btn btn-success mt-3" type="submit" :disabled="sending">{{sending ? 'Invio in corso...' : 'Invia'}}</button>
     </div>
     
   </form>
@@ -71,9 +74,9 @@ form{
     border-radius: 5px;
   }
   button{
-    border-radius: 5px;
     font-weight: bold;
     text-transform: uppercase;
+    width: 200px;
   }
 }
 .error-form{

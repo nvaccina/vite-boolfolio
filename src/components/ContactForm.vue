@@ -25,11 +25,13 @@ export default {
       axios.post(`${store.apiUrl}contacts`, data)
         .then(result => {
           this.sending = false;
-          if(!result.data.success){
+          this.success = result.data.success;
+          if(!this.success){
             this.errors = result.data.errors;
           }else{
             this.errors = {};
           }
+          console.log(result.data);
         })
       
     }
@@ -40,7 +42,7 @@ export default {
 
 <template>
 
-  <form @submit.prevent="sendForm()">
+  <form v-if="!success" @submit.prevent="sendForm()">
     <div>
       <input v-model.trim="name" type="text" name="name" placeholder="Nome" :class="{'error-form' : errors.name}" class="w-100 p-1">
       <p class="error-msg" v-for="(error, index) in errors.name" :key="index">{{ error }}</p>
@@ -58,6 +60,10 @@ export default {
     </div>
     
   </form>
+
+  <div v-else class="text-center">
+    <h3 class="success-msg">Form inviato con successo. Ti contatteremo il prima possibile!</h3>
+  </div>
 
   
   
@@ -84,6 +90,9 @@ form{
 }
 .error-msg{
   color: red;
+}
+.success-msg{
+  color: green;
 }
 
 
